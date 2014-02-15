@@ -46,11 +46,17 @@ app.times_list = [];
 app.start_time = 0;
 app.topic_num = 0;
 app.currentTopic = '';
+app.prevTopic = '';
+app.time_diff = 0;
+app.interval_diff = 0;
 
 app.markTime = function() {
-  var time_diff = Date.now() - app.start_time;
-  simply.body('The time difference is: ' + time_diff);
-  app.times_list.push({seconds: time_diff, topic: app.currentTopic});
+  var now = Date.now();
+  app.interval_diff = now - app.time_diff;
+  app.time_diff = (now - app.start_time)/1000.0;
+  app.time_diff = parseFloat(Math.round(app.time_diff*100)/100).toFixed(2);
+  simply.body('You are ' + app.time_diff + ' seconds in.');
+  app.times_list.push({seconds: app.interval_diff, topic: app.prevTopic});
 };
 
 app.buttonHandlers = {
@@ -60,7 +66,7 @@ app.buttonHandlers = {
       if (app.currIndex > 0) {
         app.currIndex--;
         simply.setText({title: data.allModes[app.currIndex].title}, true);
-        simply.subtitle(data.allModes[currIndex].subtitle);
+        simply.subtitle(data.allModes[app.currIndex].subtitle);
       }
     } else if (event.button === 'down') {
       if (app.currIndex + 1 < data.allModes.length) {
@@ -91,18 +97,23 @@ app.buttonHandlers = {
   },
   speechRun: function(event) {
     speech = app.currentSpeech;
-    app.start_time = Date.now();
     if (app.currentMode === 'Practice') {
       if (app.topic_num < speech.sections.length) {
         app.currentTopic = speech.sections[app.topic_num].topic;
+        app.prevTopic = speech.sections[app.topic_num-1].topic;
         simply.subtitle(app.currentTopic);
         app.markTime();
         app.topic_num += 1;
       } else {
         simply.title('DONE!');
-        app.topic_num = 0;
-        app.currentScreen = 'home';
-        return;
+        var now = Date.now();
+        app.interval_diff = now - app.time_diff;
+        app.time_diff = (now - app.start_time)/1000.0;
+        app.time_diff = parseFloat(Math.round(app.time_diff*100)/100).toFixed(2);
+        simply.subtitle('Total time: ' + app.time_diff + ' seconds');
+        app.prevTopic = speech.sections[app.topic_num-1].topic;
+        app.times_list.push({seconds: app.interval_diff, topic: app.prevTopic});
+        simply.body('Please go back and restart to try another speech');
       }
     } else if (app.currentMode === 'Do Speech') {
       // run timer, when it hits the values in times_list have pebble vibrate
@@ -124,6 +135,9 @@ app.selectSpeech = function() {
 };
 
 app.runSpeech = function() {
+  app.start_time = Date.now();
+  simply.subtitle(app.currentSpeech.sections[app.topic_num].topic);
+  app.topic_num += 1;
   app.currentScreen = 'speechRun';
 };
 
