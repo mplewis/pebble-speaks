@@ -93,11 +93,11 @@ app.buttonHandlers = {
   speech = app.currentSpeech;
   app.start_time = Date.now();
     if (app.currentMode === 'Practice') {
-      if (app.topic_num < speech.sections.length - 1) {
-        app.topic_num += 1;
+      if (app.topic_num < speech.sections.length) {
         app.currentTopic = speech.sections[app.topic_num].topic;
         simply.subtitle(app.currentTopic);
         app.markTime();
+        app.topic_num += 1;
       } else {
         simply.title('DONE!');
         app.topic_num = 0;
