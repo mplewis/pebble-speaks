@@ -42,6 +42,17 @@ app.displayHomeOption = function() {
   simply.subtitle(data.allModes[app.currIndex].subtitle);
 };
 
+app.times_list = [];
+app.start_time = 0;
+app.topic_num = 0;
+app.currentTopic = '';
+
+app.markTime = function() {
+  var time_diff = Date.now() - app.start_time;
+  simply.body('The time difference is: ' + time_diff);
+  app.times_list.push({seconds: time_diff, topic: app.currentTopic});
+};
+
 app.buttonHandlers = {
   loading: function(event) {},
   modeSelect: function(event) {
@@ -77,6 +88,27 @@ app.buttonHandlers = {
       app.currentSpeech = data.allSpeeches[app.currIndex];
       app.runSpeech();
     }
+  },
+  speechRun: function(event) {
+  speech = app.currentSpeech;
+  app.start_time = Date.now();
+    if (app.currentMode === 'Practice') {
+      if (app.topic_num < speech.sections.length - 1) {
+        app.topic_num += 1;
+        app.currentTopic = speech.sections[app.topic_num].topic;
+        simply.subtitle(app.currentTopic);
+        app.markTime();
+      } else {
+        simply.title('DONE!');
+        app.topic_num = 0;
+        app.currentScreen = 'home';
+        return;
+      }
+    } else if (app.currentMode === 'Do Speech') {
+      // run timer, when it hits the values in times_list have pebble vibrate
+      simply.title('FUCK');
+      speech = app.currentSpeech;
+    }
   }
 };
 
@@ -91,6 +123,7 @@ app.selectSpeech = function() {
   app.displaySpeech(data.allSpeeches[app.currIndex]);
 };
 
+/*
 app.runSpeech = function() {
   app.currentScreen = 'speechRun';
   var countdown = SECS_BEFORE_SPEECH;
@@ -109,6 +142,11 @@ app.runSpeech = function() {
 
   currentMode = 'home';
   return;
+};
+*/
+
+app.runSpeech = function() {
+  app.currentScreen = 'speechRun';
 };
 
 ajax({ url: SPEECHES_URL, type: 'json' }, function(retrieved) {
