@@ -1,5 +1,5 @@
 var SECS_BEFORE_SPEECH = 5;
-var SPEECHES_URL = 'https://gist.github.com/mplewis/9016615/raw/bd28f20110f0efb6a0142250cfe6bc082815039f/sample_speeches.json';
+var SPEECHES_URL = 'http://107.170.13.33:3000/speeches';
 
 // Namespaces
 var app = {};
