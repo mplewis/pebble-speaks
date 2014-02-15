@@ -1,43 +1,19 @@
 var SECS_BEFORE_SPEECH = 5;
+var SPEECHES_URL = 'https://gist.github.com/mplewis/9016615/raw/bd28f20110f0efb6a0142250cfe6bc082815039f/sample_speeches.json';
 
 // Namespaces
 var app = {};
 var data = {};
 data.homeOptions = [];
 data.allModes = [
-  { title: 'Do Speech' },
-  { title: 'Practice' },
+  {title: 'Speech', subtitle: 'Give a speech with prepared timings.'},
+  {title: 'Practice', subtitle: 'Practice a speech and mark new timings.'},
 ];
+data.allSpeeches = [];
 
-data.allSpeeches = [
-  {
-    title: 'Pet animals',
-    sections: [
-      {seconds: 60, topic: 'Kittens'},
-      {seconds: 20, topic: 'Puppies'},
-      {seconds: 30, topic: 'Birdies'}
-    ]
-  },
-  {
-    title: 'Deadly animals',
-    sections: [
-      {seconds: 29, topic: 'Snakes'},
-      {seconds: 255, topic: 'Sharks'}
-    ]
-  },
-  {
-    title: 'Awesome foods',
-    sections: [
-      {seconds: 100, topic: 'Chaat'},
-      {seconds: 601, topic: 'Pizza'},
-      {seconds: 331, topic: 'Salmon'},
-      {seconds: 33, topic: 'Filet mignon'}
-    ]
-  },
-];
-
-app.currentScreen = 'loading'; // 'speechSelect', 'speechRun'
-app.currentMode = 'practice'; // 'doSpeech'
+app.currIndex = 0;
+app.currentScreen = 'loading';
+app.currentMode = 'practice';
 app.currentSpeech = '';
 
 simply.setText({title: 'Loading...'}, true);
@@ -61,58 +37,62 @@ app.displaySpeech = function(speechData) {
 };
 
 app.displayHomeOption = function() {
-  var currIndex = 0;
-  simply.setText({title: data.allModes[currIndex].title}, true);
+  app.currentScreen = 'modeSelect';
+  simply.setText({title: data.allModes[app.currIndex].title}, true);
+  simply.subtitle(data.allModes[app.currIndex].subtitle);
+};
 
-  simply.on('singleClick', function(event) {
+app.buttonHandlers = {
+  loading: function(event) {},
+  modeSelect: function(event) {
     if (event.button === 'up') {
-      if (currIndex > 0) {
-        currIndex--;
-        simply.setText({title: data.allModes[currIndex].title}, true);
+      if (app.currIndex > 0) {
+        app.currIndex--;
+        simply.setText({title: data.allModes[app.currIndex].title}, true);
+        simply.subtitle(data.allModes[currIndex].subtitle);
       }
     } else if (event.button === 'down') {
-      if (currIndex + 1 < data.allModes.length) {
-        currIndex++;
-        simply.setText({title: data.allModes[currIndex].title}, true);
+      if (app.currIndex + 1 < data.allModes.length) {
+        app.currIndex++;
+        simply.setText({title: data.allModes[app.currIndex].title}, true);
+        simply.subtitle(data.allModes[app.currIndex].subtitle);
       }
     } else if (event.button === 'select') {
-      app.currentScreen = 'speechSelect';
-      app.currentMode = data.allModes[currIndex].title;
+      app.currentMode = data.allModes[app.currIndex].title;
       app.selectSpeech();
     }
-  });
-};
-
-app.selectSpeech = function() {
-  var displaySpeech = function(speechData) {
-    simply.setText({title: speechData.title}, true);
-    simply.subtitle(speechData.sections.length + ' sections');
-  };
-
-  var currIndex = 0;
-  displaySpeech(data.allSpeeches[currIndex]);
-
-  simply.on('singleClick', function(event) {
+  },
+  speechSelect: function(event) {
     if (event.button === 'up') {
-      if (currIndex > 0) {
-        currIndex--;
-        displaySpeech(data.allSpeeches[currIndex]);
+      if (app.currIndex > 0) {
+        app.currIndex--;
+        app.displaySpeech(data.allSpeeches[app.currIndex]);
       }
     } else if (event.button === 'down') {
-      if (currIndex + 1 < data.allSpeeches.length) {
-        currIndex++;
-        displaySpeech(data.allSpeeches[currIndex]);
+      if (app.currIndex + 1 < data.allSpeeches.length) {
+        app.currIndex++;
+        app.displaySpeech(data.allSpeeches[app.currIndex]);
       }
     } else if (event.button === 'select') {
-      app.currentSpeech = data.allSpeeches[currIndex];
-      app.currentScreen = 'speechRun';
+      app.currentSpeech = data.allSpeeches[app.currIndex];
       app.runSpeech();
     }
-  });
+  }
 };
 
-/*
+simply.on('singleClick', function(event) {
+  if (app.currentScreen in app.buttonHandlers) {
+    app.buttonHandlers[app.currentScreen](event);
+  }
+});
+
+app.selectSpeech = function() {
+  app.currentScreen = 'speechSelect';
+  app.displaySpeech(data.allSpeeches[app.currIndex]);
+};
+
 app.runSpeech = function() {
+  app.currentScreen = 'speechRun';
   var countdown = SECS_BEFORE_SPEECH;
   var ctdToSpeechStart = setInterval(function() {
     countdown--;
@@ -125,45 +105,13 @@ app.runSpeech = function() {
     }
     simply.subtitle('Starts in ' + countdown + '...');
   }, 1000);
+  simply.subtitle('Starts in ' + countdown + '...');
 
   currentMode = 'home';
   return;
 };
-*/
-var times_list = [];
-var start_time = 0;
-app.topic_num = 0;
-app.currentTopic = '';
 
-app.markTime = function() {
-  var time_diff = Date.now() - start_time;
-  simply.body('The time difference is: ' + time_diff);
-  times_list.push({seconds: time_diff, topic: app.currentTopic});
-};
-
-app.runSpeech = function() {
-  currentMode = 'speechRun';
-  speech = app.currentSpeech;
-  start_time = Date.now();
-  //var topic_num = 0;
-  if (app.currentMode === 'Practice') {
-    if (app.topic_num < speech.sections.length) {
-      simply.on('singleClick', function(e) {
-        app.currentTopic = speech.sections[app.topic_num].topic;
-        simply.subtitle(app.currentTopic);
-        app.markTime();
-        topic_num += 1;
-      });
-    }
-    simply.on('longClick', function(e) {
-      simply.title('DONE!');
-      topic_num = 0;
-      app.currentScreen = 'home';
-      return;
-    });
-  } else if (app.currentMode === 'Do Speech') {
-      // run timer, when it hits the values in times_list have pebble vibrate
-      simply.title('FUCK');
-  }
-};
-app.displayHomeOption();
+ajax({ url: SPEECHES_URL, type: 'json' }, function(retrieved) {
+  data.allSpeeches = retrieved;
+  app.displayHomeOption();
+});
