@@ -89,26 +89,14 @@ app.buttonHandlers = {
       app.runSpeech();
     }
   },
-  speechRun: function(event) {
-  speech = app.currentSpeech;
-  app.start_time = Date.now();
-    if (app.currentMode === 'Practice') {
-      if (app.topic_num < speech.sections.length - 1) {
-        app.topic_num += 1;
-        app.currentTopic = speech.sections[app.topic_num].topic;
-        simply.subtitle(app.currentTopic);
-        app.markTime();
-      } else {
-        simply.title('DONE!');
-        app.topic_num = 0;
-        app.currentScreen = 'home';
-        return;
-      }
-    } else if (app.currentMode === 'Do Speech') {
-      // run timer, when it hits the values in times_list have pebble vibrate
-      simply.title('FUCK');
-      speech = app.currentSpeech;
-    }
+  runSpeech: function(event) {
+    // Button handler code goes here
+  },
+  runFreeform: function(event) {
+    // Button handler code goes here
+  },
+  runPractice: function(event) {
+    // Button handler code goes here
   }
 };
 
@@ -124,7 +112,7 @@ app.selectSpeech = function() {
 };
 
 app.runSpeech = function() {
-  app.currentScreen = 'speechRun';
+  app.currentScreen = 'runSpeech';
 };
 
 ajax({ url: SPEECHES_URL, type: 'json' }, function(retrieved) {
