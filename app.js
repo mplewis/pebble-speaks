@@ -36,8 +36,8 @@ data.allSpeeches = [
   },
 ];
 
-app.currentScreen = 'loading'; // 'speechSelect', 'speechRun'
-app.currentMode = 'practice'; // 'doSpeech'
+app.currentScreen = 'loading';
+app.currentMode = 'practice';
 app.currentSpeech = '';
 
 simply.setText({title: 'Loading...'}, true);
