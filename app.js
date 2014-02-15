@@ -123,28 +123,6 @@ app.selectSpeech = function() {
   app.displaySpeech(data.allSpeeches[app.currIndex]);
 };
 
-/*
-app.runSpeech = function() {
-  app.currentScreen = 'speechRun';
-  var countdown = SECS_BEFORE_SPEECH;
-  var ctdToSpeechStart = setInterval(function() {
-    countdown--;
-    if (countdown <= 0) {
-      clearInterval(ctdToSpeechStart);
-      simply.vibe('double');
-      simply.title('GO!');
-      simply.subtitle('');
-      return;
-    }
-    simply.subtitle('Starts in ' + countdown + '...');
-  }, 1000);
-  simply.subtitle('Starts in ' + countdown + '...');
-
-  currentMode = 'home';
-  return;
-};
-*/
-
 app.runSpeech = function() {
   app.currentScreen = 'speechRun';
 };
