@@ -1,3 +1,7 @@
+var speeches;
+var currSpeech = 0;
+var currentMode = 'loading'; // 'speechSelect', 'speechRun'
+
 simply.setText({title: 'Loading...'}, true);
 
 function secsToMMSS(secs) {
@@ -58,10 +62,15 @@ function loadSpeeches(url, callback) {
   callback(allSpeeches);
 }
 
+function selectSpeech(speech) {
+  currentMode = 'speechRun';
+  simply.setText({title: 'Speech selected'}, true);
+  simply.subtitle(speech.title);
+}
 
-loadSpeeches('http://www.whatever.com/', function(speeches) {
-  var currSpeech = 0;
-  simply.on('singleClick', function(event) {
+simply.on('singleClick', function(event) {
+  if (currentMode === 'speechSelect') {
+
     if (event.button === 'up') {
       if (currSpeech > 0) {
         currSpeech--;
@@ -72,7 +81,15 @@ loadSpeeches('http://www.whatever.com/', function(speeches) {
         currSpeech++;
         displaySpeech(speeches[currSpeech]);
       }
+    } else if (event.button === 'select') {
+      selectSpeech(speeches[currSpeech]);
     }
-  });
+    
+  }
+});
+
+loadSpeeches('http://www.whatever.com/', function(speechesRetrieved) {
+  currentMode = 'speechSelect';
+  speeches = speechesRetrieved;
   displaySpeech(speeches[0]);
 });
