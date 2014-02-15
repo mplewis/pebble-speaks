@@ -59,7 +59,7 @@ app.buttonHandlers = {
       if (app.currIndex > 0) {
         app.currIndex--;
         simply.setText({title: data.allModes[app.currIndex].title}, true);
-        simply.subtitle(data.allModes[currIndex].subtitle);
+        simply.subtitle(data.allModes[app.currIndex].subtitle);
       }
     } else if (event.button === 'down') {
       if (app.currIndex + 1 < data.allModes.length) {
