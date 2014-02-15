@@ -13,7 +13,6 @@ data.allSpeeches = [];
 
 app.currIndex = 0;
 app.currentScreen = 'loading';
-app.currentMode = 'practice';
 app.currentSpeech = '';
 
 simply.setText({title: 'Loading...'}, true);
