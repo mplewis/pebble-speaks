@@ -63,17 +63,20 @@ app.displaySpeech = function(speechData) {
 app.displayHomeOption = function() {
   var currIndex = 0;
   simply.setText({title: data.allModes[currIndex].title}, true);
+  simply.subtitle(data.allModes[currIndex].subtitle);
 
   simply.on('singleClick', function(event) {
     if (event.button === 'up') {
       if (currIndex > 0) {
         currIndex--;
         simply.setText({title: data.allModes[currIndex].title}, true);
+        simply.subtitle(data.allModes[currIndex].subtitle);
       }
     } else if (event.button === 'down') {
       if (currIndex + 1 < data.allModes.length) {
         currIndex++;
         simply.setText({title: data.allModes[currIndex].title}, true);
+        simply.subtitle(data.allModes[currIndex].subtitle);
       }
     } else if (event.button === 'select') {
       app.currentScreen = 'speechSelect';
