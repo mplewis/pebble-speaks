@@ -80,15 +80,6 @@ app.buttonHandlers = {
   }
 };
 
-app.selectSpeech = function() {
-   displaySpeech = function(speechData) {
-    simply.setText({title: speechData.title}, true);
-    simply.subtitle(speechData.sections.length + ' sections');
-  };
-
-  displaySpeech(data.allSpeeches[app.currIndex]);
-};
-
 simply.on('singleClick', function(event) {
   if (app.currentScreen in app.buttonHandlers) {
     app.buttonHandlers[app.currentScreen](event);
