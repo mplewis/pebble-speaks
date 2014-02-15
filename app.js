@@ -111,6 +111,7 @@ app.selectSpeech = function() {
   });
 };
 
+/*
 app.runSpeech = function() {
   var countdown = SECS_BEFORE_SPEECH;
   var ctdToSpeechStart = setInterval(function() {
@@ -128,5 +129,36 @@ app.runSpeech = function() {
   currentMode = 'home';
   return;
 };
+*/
+var times_list = [];
+var start_time = 0;
+app.currentTopic = '';
 
+app.markTime = function() {
+  var time_diff = Date.now() - start_time;
+  simply.body('The time difference is: ' + time_diff);
+  times_list.push({seconds: time_diff, topic: app.currentTopic});
+};
+
+app.runSpeech = function() {
+  currentMode = 'speechRun';
+  speech = app.currentSpeech;
+  start_time = Date.now();
+  var topic_num = 0;
+  if (app.currentMode === 'Practice') {
+    simply.on('singleClick', function(e) {
+      app.currentTopic = speech.sections[topic_num].topic;
+      simply.subtitle(app.currentTopic);
+      app.markTime();
+      topic_num += 1;
+    });
+    simply.on('longClick', function(e) {
+      simply.title('DONE!');
+      return;
+    });
+  } else if (app.currentMode === 'Do Speech') {
+      // run timer, when it hits the values in times_list have pebble vibrate
+      simply.title('FUCK');
+  }
+};
 app.displayHomeOption();
