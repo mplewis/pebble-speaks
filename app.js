@@ -1,4 +1,5 @@
 var SECS_BEFORE_SPEECH = 5;
+var SPEECHES_URL = 'https://gist.github.com/mplewis/9016615/raw/bd28f20110f0efb6a0142250cfe6bc082815039f/sample_speeches.json';
 
 // Namespaces
 var app = {};
@@ -8,36 +9,9 @@ data.allModes = [
   {title: 'Speech', subtitle: 'Give a speech with prepared timings.'},
   {title: 'Practice', subtitle: 'Practice a speech and mark new timings.'},
 ];
+data.allSpeeches = [];
 
 app.currIndex = 0;
-
-data.allSpeeches = [
-  {
-    title: 'Pet animals',
-    sections: [
-      {seconds: 60, topic: 'Kittens'},
-      {seconds: 20, topic: 'Puppies'},
-      {seconds: 30, topic: 'Birdies'}
-    ]
-  },
-  {
-    title: 'Deadly animals',
-    sections: [
-      {seconds: 29, topic: 'Snakes'},
-      {seconds: 255, topic: 'Sharks'}
-    ]
-  },
-  {
-    title: 'Awesome foods',
-    sections: [
-      {seconds: 100, topic: 'Chaat'},
-      {seconds: 601, topic: 'Pizza'},
-      {seconds: 331, topic: 'Salmon'},
-      {seconds: 33, topic: 'Filet mignon'}
-    ]
-  },
-];
-
 app.currentScreen = 'loading';
 app.currentMode = 'practice';
 app.currentSpeech = '';
@@ -146,4 +120,7 @@ app.runSpeech = function() {
   return;
 };
 
-app.displayHomeOption();
+ajax({ url: SPEECHES_URL, type: 'json' }, function(retrieved) {
+  data.allSpeeches = retrieved;
+  app.displayHomeOption();
+});
