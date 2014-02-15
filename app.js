@@ -72,6 +72,7 @@ function selectSpeech(speech) {
     countdown--;
     if (countdown <= 0) {
       clearInterval(ctdToSpeechStart);
+      simply.vibe('double');
       simply.title('GO!');
       simply.subtitle('');
       return;
