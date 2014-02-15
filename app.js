@@ -1,14 +1,4 @@
-var speechData = {
-  title: 'Pet animals',
-  sections: [
-    {seconds: 60, topic: 'Kittens'},
-    {seconds: 20, topic: 'Puppies'},
-    {seconds: 30, topic: 'Birdies'},
-  ]
-};
-
-var currSectionNum = 0;
-var numSections = speechData.sections.length;
+simply.setText({title: 'Loading...'}, true);
 
 function secsToMMSS(secs) {
   var minutes = 0;
@@ -23,25 +13,66 @@ function secsToMMSS(secs) {
   return minutes + ':' + secs;
 }
 
-function displaySection(sectionNum) {
-  var section = speechData.sections[sectionNum];
-  var mmss = secsToMMSS(section.seconds);
+function displaySection(sectionData) {
+  var mmss = secsToMMSS(sectionData.seconds);
   simply.setText({title: mmss}, true);
-  simply.subtitle(section.topic);
+  simply.subtitle(sectionData.topic);
 }
 
-simply.on('singleClick', function(event) {
-  if (event.button === 'up') {
-    if (currSectionNum > 0) {
-      currSectionNum--;
-      displaySection(currSectionNum);
-    }
-  } else if (event.button === 'down') {
-    if (currSectionNum < numSections - 1) {
-      currSectionNum++;
-      displaySection(currSectionNum);
-    }
-  }
-});
+function displaySpeech(speechData) {
+  simply.setText({title: speechData.title}, true);
+  simply.subtitle(speechData.sections.length + ' sections');
+}
 
-displaySection(currSectionNum);
+function sectionData(speechData, sectionNum) {
+  return speechData.sections[sectionNum];
+}
+
+function loadSpeeches(url, callback) {
+  var allSpeeches = [
+    {
+      title: 'Pet animals',
+      sections: [
+        {seconds: 60, topic: 'Kittens'},
+        {seconds: 20, topic: 'Puppies'},
+        {seconds: 30, topic: 'Birdies'}
+      ]
+    },
+    {
+      title: 'Deadly animals',
+      sections: [
+        {seconds: 29, topic: 'Snakes'},
+        {seconds: 255, topic: 'Sharks'}
+      ]
+    },
+    {
+      title: 'Awesome foods',
+      sections: [
+        {seconds: 100, topic: 'Chaat'},
+        {seconds: 601, topic: 'Pizza'},
+        {seconds: 331, topic: 'Salmon'},
+        {seconds: 33, topic: 'Filet mignon'}
+      ]
+    },
+  ];
+  callback(allSpeeches);
+}
+
+
+loadSpeeches('http://www.whatever.com/', function(speeches) {
+  var currSpeech = 0;
+  simply.on('singleClick', function(event) {
+    if (event.button === 'up') {
+      if (currSpeech > 0) {
+        currSpeech--;
+        displaySpeech(speeches[currSpeech]);
+      }
+    } else if (event.button === 'down') {
+      if (currSpeech + 1 < speeches.length) {
+        currSpeech++;
+        displaySpeech(speeches[currSpeech]);
+      }
+    }
+  });
+  displaySpeech(speeches[0]);
+});
