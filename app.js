@@ -974,9 +974,6 @@ data.allSpeeches = [];
 
 app.currIndex = 0;
 app.currentScreen = 'loading';
-app.currentSpeech = '';
-
-simply.setText({title: 'Loading...'}, true);
 
 app.secsToMMSS = function(secs) {
   var minutes = 0;
@@ -1013,6 +1010,33 @@ app.markTime = function() {
   app.times_list.push({seconds: time_diff, topic: app.currentTopic});
 };
 
+app.startNewCountdown = function(text, secs, vibe, callback) {
+  var countdown = secs;
+  var timer = setInterval(function() {
+    countdown--;
+    simply.title(app.secsToMMSS(countdown));
+    if (countdown <= 0) {
+      clearInterval(timer);
+      simply.vibe(vibe);
+      callback();
+    }
+  }, 1000);
+  simply.title(app.secsToMMSS(countdown));
+  simply.subtitle(text);
+};
+
+app.startAllCountdowns = function(speech) {
+  async.eachSeries(speech.sections, function(s, done) {
+    app.startNewCountdown(s.topic, s.seconds, 'short', done);
+  }, app.speechDone);
+};
+
+app.speechDone = function() {
+    simply.vibe('double');
+    simply.title('You\'re done!');
+    simply.subtitle('Matt, He, Jiexi, and Kyle for PennApps 2014');
+}
+
 app.buttonHandlers = {
   loading: function(event) {},
   modeSelect: function(event) {
@@ -1045,8 +1069,7 @@ app.buttonHandlers = {
         app.displaySpeech(data.allSpeeches[app.currIndex]);
       }
     } else if (event.button === 'select') {
-      app.currentSpeech = data.allSpeeches[app.currIndex];
-      app.runSpeech();
+      app.runSpeech(data.allSpeeches[app.currIndex]);
     }
   },
   runSpeech: function(event) {
@@ -1071,9 +1094,25 @@ app.selectSpeech = function() {
   app.displaySpeech(data.allSpeeches[app.currIndex]);
 };
 
-app.runSpeech = function() {
+app.runSpeech = function(speech) {
   app.currentScreen = 'runSpeech';
+  app.currentSpeech = speech;
+
+  var countdown = SECS_BEFORE_SPEECH;
+  var ctdToSpeechStart = setInterval(function() {
+    countdown--;
+    if (countdown <= 0) {
+      clearInterval(ctdToSpeechStart);
+      simply.vibe('double');
+      app.startAllCountdowns(speech);
+      return;
+    }
+    simply.subtitle('Starts in ' + countdown + '...');
+  }, 1000);
+  simply.subtitle('Starts in ' + countdown + '...');
 };
+
+simply.title('Loading...');
 
 ajax({ url: SPEECHES_URL, type: 'json' }, function(retrieved) {
   data.allSpeeches = retrieved;
