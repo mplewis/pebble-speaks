@@ -90,8 +90,8 @@ app.buttonHandlers = {
     }
   },
   speechRun: function(event) {
-  speech = app.currentSpeech;
-  app.start_time = Date.now();
+    speech = app.currentSpeech;
+    app.start_time = Date.now();
     if (app.currentMode === 'Practice') {
       if (app.topic_num < speech.sections.length) {
         app.currentTopic = speech.sections[app.topic_num].topic;
