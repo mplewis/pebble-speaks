@@ -132,6 +132,7 @@ app.runSpeech = function() {
 */
 var times_list = [];
 var start_time = 0;
+app.topic_num = 0;
 app.currentTopic = '';
 
 app.markTime = function() {
@@ -144,16 +145,20 @@ app.runSpeech = function() {
   currentMode = 'speechRun';
   speech = app.currentSpeech;
   start_time = Date.now();
-  var topic_num = 0;
+  //var topic_num = 0;
   if (app.currentMode === 'Practice') {
-    simply.on('singleClick', function(e) {
-      app.currentTopic = speech.sections[topic_num].topic;
-      simply.subtitle(app.currentTopic);
-      app.markTime();
-      topic_num += 1;
-    });
+    if (app.topic_num < speech.sections.length) {
+      simply.on('singleClick', function(e) {
+        app.currentTopic = speech.sections[app.topic_num].topic;
+        simply.subtitle(app.currentTopic);
+        app.markTime();
+        topic_num += 1;
+      });
+    }
     simply.on('longClick', function(e) {
       simply.title('DONE!');
+      topic_num = 0;
+      app.currentScreen = 'home';
       return;
     });
   } else if (app.currentMode === 'Do Speech') {
