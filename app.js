@@ -1,3 +1,5 @@
+var SECS_BEFORE_SPEECH = 5;
+
 var speeches;
 var currSpeech = 0;
 var currentMode = 'loading'; // 'speechSelect', 'speechRun'
@@ -64,8 +66,19 @@ function loadSpeeches(url, callback) {
 
 function selectSpeech(speech) {
   currentMode = 'speechRun';
-  simply.setText({title: 'Speech selected'}, true);
-  simply.subtitle(speech.title);
+  simply.title(speech.title);
+  var countdown = SECS_BEFORE_SPEECH;
+  var ctdToSpeechStart = setInterval(function() {
+    countdown--;
+    if (countdown <= 0) {
+      clearInterval(ctdToSpeechStart);
+      simply.title('GO!');
+      simply.subtitle('');
+      return;
+    }
+    simply.subtitle('Starts in ' + countdown + '...');
+  }, 1000);
+  simply.subtitle('Starts in ' + countdown + '...');
 }
 
 simply.on('singleClick', function(event) {
