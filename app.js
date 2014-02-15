@@ -5,8 +5,8 @@ var app = {};
 var data = {};
 data.homeOptions = [];
 data.allModes = [
-  { title: 'Do Speech' },
-  { title: 'Practice' },
+  {title: 'Speech', subtitle: 'Give a speech with prepared timings.'},
+  {title: 'Practice', subtitle: 'Practice a speech and mark new timings.'},
 ];
 
 app.currIndex = 0;
@@ -38,8 +38,8 @@ data.allSpeeches = [
   },
 ];
 
-app.currentScreen = 'loading'; // 'speechSelect', 'speechRun'
-app.currentMode = 'practice'; // 'doSpeech'
+app.currentScreen = 'loading';
+app.currentMode = 'practice';
 app.currentSpeech = '';
 
 simply.setText({title: 'Loading...'}, true);
@@ -65,8 +65,8 @@ app.displaySpeech = function(speechData) {
 app.displayHomeOption = function() {
   app.currentScreen = 'modeSelect';
   simply.setText({title: data.allModes[app.currIndex].title}, true);
+  simply.subtitle(data.allModes[app.currIndex].subtitle);
 };
-
 
 app.buttonHandlers = {
   loading: function(event) {},
@@ -75,11 +75,13 @@ app.buttonHandlers = {
       if (app.currIndex > 0) {
         app.currIndex--;
         simply.setText({title: data.allModes[app.currIndex].title}, true);
+        simply.subtitle(data.allModes[currIndex].subtitle);
       }
     } else if (event.button === 'down') {
       if (app.currIndex + 1 < data.allModes.length) {
         app.currIndex++;
         simply.setText({title: data.allModes[app.currIndex].title}, true);
+        simply.subtitle(data.allModes[app.currIndex].subtitle);
       }
     } else if (event.button === 'select') {
       app.currentMode = data.allModes[app.currIndex].title;
@@ -102,6 +104,15 @@ app.buttonHandlers = {
       app.runSpeech();
     }
   }
+};
+
+app.selectSpeech = function() {
+   displaySpeech = function(speechData) {
+    simply.setText({title: speechData.title}, true);
+    simply.subtitle(speechData.sections.length + ' sections');
+  };
+
+  displaySpeech(data.allSpeeches[app.currIndex]);
 };
 
 simply.on('singleClick', function(event) {
@@ -129,6 +140,7 @@ app.runSpeech = function() {
     }
     simply.subtitle('Starts in ' + countdown + '...');
   }, 1000);
+  simply.subtitle('Starts in ' + countdown + '...');
 
   currentMode = 'home';
   return;
