@@ -124,6 +124,7 @@ app.runSpeech = function() {
     }
     simply.subtitle('Starts in ' + countdown + '...');
   }, 1000);
+  simply.subtitle('Starts in ' + countdown + '...');
 
   currentMode = 'home';
   return;
