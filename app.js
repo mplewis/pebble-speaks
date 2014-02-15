@@ -5,8 +5,8 @@ var app = {};
 var data = {};
 data.homeOptions = [];
 data.allModes = [
-  { title: 'Do Speech' },
-  { title: 'Practice' },
+  {title: 'Speech', subtitle: 'Give a speech with prepared timings.'},
+  {title: 'Practice', subtitle: 'Practice a speech and mark new timings.'},
 ];
 
 data.allSpeeches = [
