@@ -9,6 +9,8 @@ data.allModes = [
   { title: 'Practice' },
 ];
 
+app.currIndex = 0;
+
 data.allSpeeches = [
   {
     title: 'Pet animals',
