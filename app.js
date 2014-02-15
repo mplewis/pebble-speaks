@@ -7,7 +7,8 @@ var data = {};
 data.homeOptions = [];
 data.allModes = [
   {title: 'Speech', subtitle: 'Give a speech with prepared timings.'},
-  {title: 'Practice', subtitle: 'Practice a speech and mark new timings.'},
+  {title: 'Freeform', subtitle: 'Give a speech without timings.'},
+  {title: 'Practice', subtitle: 'Practice a speech and mark new timings.'}
 ];
 data.allSpeeches = [];
 
