@@ -180,12 +180,11 @@ app.buttonHandlers = {
   },
   runFreeform: function(event) {
     // Button handler code goes here
+    speech = app.currentSpeech;
     if (app.topic_num < speech.sections.length) {
       app.currentTopic = speech.sections[app.topic_num].topic;
     } else {
-      simply.title('Done!');
-      simply.subtitle('Go back for another speech!');
-      simply.body('');
+      app.speechDone();
     }
   }
 };
@@ -257,8 +256,9 @@ app.runSpeech = function(speech) {
   simply.subtitle('Starts in ' + countdown + '...');
 };
 
-app.runFreeform = function() {
+app.runFreeform = function(speech) {
   app.currentScreen = 'runFreeform';
+  app.currentSpeech = speech;
   var currTopic = speech.sections[app.topic_num].topic;
   simply.subtitle(currTopic);
   app.topic_num += 1;
