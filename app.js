@@ -171,6 +171,7 @@ app.buttonHandlers = {
       } else if (app.currentMode === 'Practice') {
         app.runPractice(speech);
       } else {
+        app.currentScreen = '';
         simply.title(app.currentMode + ' not implemented');
         simply.subtitle('Sorry! :(');
       }
