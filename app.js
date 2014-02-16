@@ -144,18 +144,20 @@ app.buttonHandlers = {
     }
   },
   speechSelect: function(event) {
-    var speech = data.allSpeeches[app.currIndex];
     if (event.button === 'up') {
-      if (app.currIndex > 0) {
         app.currIndex--;
-        app.displaySpeech(speech);
+      if (app.currIndex < 0) {
+        app.currIndex = 0;
       }
+      app.displaySpeech(data.allSpeeches[app.currIndex]);
     } else if (event.button === 'down') {
-      if (app.currIndex + 1 < data.allSpeeches.length) {
-        app.currIndex++;
-        app.displaySpeech(speech);
+      app.currIndex++;
+      if (app.currIndex >= data.allSpeeches.length) {
+        app.currIndex = data.allSpeeches.length - 1;
       }
+      app.displaySpeech(data.allSpeeches[app.currIndex]);
     } else if (event.button === 'select') {
+      var speech = data.allSpeeches[app.currIndex];
       app.currentSpeech = speech;
       if (app.currentMode === 'Speech') {
         app.runSpeech(speech);
