@@ -18,9 +18,12 @@ footer {
 }
 
 #footer-text {
+    font-size: 10px;
     left: 10px;
     bottom: 10px;
     text-align: right;
+    padding: 5px;
+    padding-right: 15px;
 }
 
 article {
@@ -29,3 +32,6 @@ article {
     position: relative;
 }
 
+.navbar-brand {
+    font-size: 36px;
+}

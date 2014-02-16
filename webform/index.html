@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pebblic Speaking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="http://bootswatch.com/assets/css/bootswatch.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Pebblic Speaking</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <article>
+      <div class="row col-xs-12 form">
+        <div class="panel-body">
+          <form class="form-horizontal" id="speechForm" action="post">
+            <fieldset>
+              <legend>Fill in the boxes below to create a new speech!</legend>
+              <div class="form-group">
+                <label for="speechName" class="col-lg-2 control-label">Speech Title</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control" id="speechName" placeHolder="What's your speech about?">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="topicPhrases" class="col-lg-2 control-label">Topic Phrases</label>
+                <div class="col-lg-10">
+                  <textarea class="form-control" rows="3" id="topicPhrases" placeholder="Lions                                                                                                                                                                                                                                                                                                                                                                                                                                  Tigers                                                                                                                                                                                                                                                                                                                                                                                                                
+                  Bears"></textarea>
+                  <span class="help-block">
+                  Please enter one topic phrase per line.
+                  </span>
+                </div>
+              </div>
+              <div class="form-group pull-right" style="margin-right: 0;">
+                <button type="button" class="btn btn-primary" id="submit">Submit</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </article>
+    <footer>
+      <div id="footer-text">
+       <em>Made by He, Jiexi, Kyle, and Matt for PennApps 2014!</em>
+      </div>
+    </footer>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="api.js"></script>
+  </body>
+</html>
