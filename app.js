@@ -94,7 +94,7 @@ app.finishPractice = function() {
     simply.title('Data saved! Press Back to exit.');
     simply.vibe('long');
   }, function() {
-    simply.title('Couldn\'t save data. Check your network connection.');
+    simply.title('Couldn\'t save data. RIP, Penn Wi-Fi.');
     simply.vibe('double');
   });
 }
