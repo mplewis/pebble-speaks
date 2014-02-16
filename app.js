@@ -62,6 +62,7 @@ app.markTime = function() {
 
 app.finishPractice = function() {
   simply.title('DONE!');
+  app.currentScreen = '';
   var now = Date.now();
   app.interval_diff = now - app.time_diff;
   app.time_diff = (now - app.start_time)/1000.0;
@@ -91,8 +92,10 @@ app.finishPractice = function() {
     data: {'speechData': JSON.stringify(finalSpeech)}
   }, function() {
     simply.title('Data saved! Press Back to exit.');
+    simply.vibe('long');
   }, function() {
-    simply.title('Couldn\'t save data. Check your network connection.');
+    simply.title('Couldn\'t save data. RIP, Penn Wi-Fi.');
+    simply.vibe('double');
   });
 }
 
@@ -118,6 +121,7 @@ app.startAllCountdowns = function(speech) {
 };
 
 app.speechDone = function() {
+    app.currentScreen = '';
     simply.vibe('double');
     simply.title('You\'re done!');
     simply.subtitle('Matt, He, Jiexi, and Kyle for PennApps 2014');
@@ -144,18 +148,25 @@ app.buttonHandlers = {
     }
   },
   speechSelect: function(event) {
-    var speech = data.allSpeeches[app.currIndex];
     if (event.button === 'up') {
-      if (app.currIndex > 0) {
         app.currIndex--;
-        app.displaySpeech(speech);
+      if (app.currIndex < 0) {
+        app.currIndex = 0;
       }
+      app.displaySpeech(data.allSpeeches[app.currIndex]);
+      simply.body('Speech ' + (app.currIndex + 1) +
+                  ' of ' + data.allSpeeches.length);
     } else if (event.button === 'down') {
-      if (app.currIndex + 1 < data.allSpeeches.length) {
-        app.currIndex++;
-        app.displaySpeech(speech);
+      app.currIndex++;
+      if (app.currIndex >= data.allSpeeches.length) {
+        app.currIndex = data.allSpeeches.length - 1;
       }
+      app.displaySpeech(data.allSpeeches[app.currIndex]);
+      simply.body('Speech ' + (app.currIndex + 1) +
+                  ' of ' + data.allSpeeches.length);
     } else if (event.button === 'select') {
+      simply.body('');
+      var speech = data.allSpeeches[app.currIndex];
       app.currentSpeech = speech;
       if (app.currentMode === 'Speech') {
         app.runSpeech(speech);
@@ -227,13 +238,15 @@ app.speechSelect = function() {
   app.currentScreen = 'speechSelect';
   app.currIndex = 0;
   app.displaySpeech(data.allSpeeches[app.currIndex]);
+  simply.body('Speech ' + (app.currIndex + 1) +
+              ' of ' + data.allSpeeches.length);
 };
 
 app.runPractice = function(speech) {
   app.currentScreen = 'runPractice';
   app.start_time = Date.now();
   var currTopic = speech.sections[app.topic_num].topic;
-  simply.title('RECORDING');
+  simply.title('RECORDING Press to mark:');
   simply.subtitle(currTopic);
   app.topic_num += 1;
 };
