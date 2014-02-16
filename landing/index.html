@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>pebblic speaking</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Side Menu -->
+    <a id="menu-toggle" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-default btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand"><a href="http://startbootstrap.com">pebblic<strong>speaking</strong></a>
+            </li>
+            <li><a href="#top">Home</a>
+            </li>
+            <li><a href="#about">About</a>
+            </li>
+            <li><a href="#contributors">Contributors</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /Side Menu -->
+
+    <!-- Full Page Image Header Area -->
+    <div id="top" class="header">
+        <div class="vert-text">
+          <h1>pebblic <strong>speaking</strong></h1>
+          <h3>Helping you present professionally.</h3>
+            <a href="#about" class="btn btn-default btn-lg">Find Out More</a>
+        </div>
+    </div>
+    <!-- /Full Page Image Header Area -->
+
+    <!-- Intro -->
+    <div id="about" class="intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                  <h2>About</h2>
+                  <div class="box-thing">
+                    <div class="row-thing">
+                      General description here
+                    </div>
+                    <div class="row-thing">
+                      <div class="image">
+                        <img src="./resources/main.gif" width="100%"></img>
+                      </div>
+                      <div class="text pull-right">You can use PebblicSpeaking in three different modes:
+                      Practice, Speech, and Free Form. </div>
+                    </div>
+                    <div class="row-thing">
+                      <div class="image pull-right"><img src="./resources/prac.gif" width="100%"></img></div>
+                      <div class="text">foo</div>
+                    </div>
+                    <div class="row-thing">
+                      <div class="image pull-right"><img src="./resources/dem.gif" width="100%"></img></div>
+                      <div class="text">foo</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Intro -->
+
+
+    <div class="callout">
+        <div class="vert-text">
+          <h2>Made at PennApps, Spring 2014.</h2>
+        </div>
+    </div>
+
+    <div id="contributors" class="dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 text-center">
+                    <h2>Contributors</h2>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-md-offset-2 text-center">
+                    <div class="service-item">
+                        <i class="service-icon fa fa-rocket"></i>
+                        <h4>Matthew Lewis</h4>
+                        <p>University of Minnesota Twin Cities</p>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="service-item">
+                        <i class="service-icon fa fa-magnet"></i>
+                        <h4>Jiexi Cao</h4>
+                        <p>Harvey Mudd College</p>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="service-item">
+                        <i class="service-icon fa fa-shield"></i>
+                        <h4>He Li</h4>
+                        <p>Harvard University<p>
+                    </div>
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="service-item">
+                        <i class="service-icon fa fa-pencil"></i>
+                        <h4>Kyle Sukley</h4>
+                        <p>Abington Senior High School</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Services -->
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <div class="top-scroll">
+                        <a href="#top"><i class="fa fa-circle-arrow-up scroll fa-4x"></i></a>
+                    </div>
+                    <hr>
+                    <p>Created by
+                      <a href="http://www.mplewis.com/">Matthew Lewis</a>,
+                      <a href="http://www.jiexicao.com/">Jiexi Cao</a>,
+                      <a href="https://twitter.com/HeliumLithium">He Li</a>,
+                      <a href="#">Kyle Sukley</a>
+                      at PennApps (Spring 2014).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- /Footer -->
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Custom JavaScript for the Side Menu and Smooth Scrolling -->
+    <script>
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    </script>
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    </script>
+    <script>
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    </script>
+
+</body>
+
+</html>
