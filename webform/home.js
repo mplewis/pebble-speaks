@@ -3,25 +3,28 @@ $(function() {
         var speechName = $("#speechName").val();
         var topicPhrases = document.getElementById("topicPhrases").value;
 
-        topicPhrases = topicPhrases.split('\n');
-        // Trim trailing whitespace
+        topicPhrases = topicPhrases.split("\n");
+        var sections = [];
+        // Trim trailing whitespace and format correctly for storage
         for (var i in topicPhrases) {
-            topicPhrases[i] = topicPhrases[i].trim();
+            var topic = {
+                "seconds": 0,
+                "topic": topicPhrases[i].trim()
+            };
+            sections.push(topic);
         }
 
         var speechData = {
-            speechName: speechName,
-            topicPhrases: topicPhrases,
+            title: speechName,
+            sections: sections
         };
 
         var jsonSpeech = JSON.stringify(speechData);
         console.log(jsonSpeech);
 
-        var server = "http://107.170.13.33:3000/speeches";
-
         $.ajax({
             type: "POST",
-            url: reqbin,
+            url: "http://pspk.kesdev.com/speeches",
             data: JSON.stringify(speechData),
             contentType: "application/json",
             dataType: "json",
