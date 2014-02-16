@@ -162,8 +162,7 @@ app.buttonHandlers = {
       } else if (app.currentMode === 'Practice') {
         app.runPractice(speech);
       } else {
-        simply.title(app.currentMode + ' not implemented');
-        simply.subtitle('Sorry! :(');
+        app.runFreeform(speech);
       }
     }
   },
@@ -179,17 +178,39 @@ app.buttonHandlers = {
       app.finishPractice();
     }
   },
-  runSpeech: function(event) {
-    // Button handler code goes here
-  },
   runFreeform: function(event) {
     // Button handler code goes here
+    if (app.topic_num < speech.sections.length) {
+      app.currentTopic = speech.sections[app.topic_num].topic;
+    } else {
+      simply.title('Done!');
+      simply.subtitle('Go back for another speech!');
+      simply.body('');
+    }
   }
 };
 
 app.accelHandlers = {
-  // your handlers go here
-}
+  runPractice: function(event) {
+    speech = app.currentSpeech;
+    if (app.topic_num < speech.sections.length) {
+      app.currentTopic = speech.sections[app.topic_num].topic;
+      app.prevTopic = speech.sections[app.topic_num-1].topic;
+      simply.subtitle(app.currentTopic);
+      app.markTime();
+      app.topic_num += 1;
+    } else {
+      app.finishPractice();
+    }
+  },
+  runFreeform: function(event) {
+    if (app.topic_num < speech.sections.length) {
+      app.currentTopic = speech.sections[app.topic_num].topic;
+    } else {
+      app.speechDone();
+    }
+  }
+};
 
 simply.on('singleClick', function(event) {
   if (app.currentScreen in app.buttonHandlers) {
@@ -237,7 +258,10 @@ app.runSpeech = function(speech) {
 };
 
 app.runFreeform = function() {
-  //working on freeform
+  app.currentScreen = 'runFreeform';
+  var currTopic = speech.sections[app.topic_num].topic;
+  simply.subtitle(currTopic);
+  app.topic_num += 1;
 }
 
 simply.title('Loading...');
