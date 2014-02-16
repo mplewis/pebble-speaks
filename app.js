@@ -62,6 +62,7 @@ app.markTime = function() {
 
 app.finishPractice = function() {
   simply.title('DONE!');
+  app.currentScreen = '';
   var now = Date.now();
   app.interval_diff = now - app.time_diff;
   app.time_diff = (now - app.start_time)/1000.0;
@@ -120,6 +121,7 @@ app.startAllCountdowns = function(speech) {
 };
 
 app.speechDone = function() {
+    app.currentScreen = '';
     simply.vibe('double');
     simply.title('You\'re done!');
     simply.subtitle('Matt, He, Jiexi, and Kyle for PennApps 2014');
