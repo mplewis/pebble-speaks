@@ -120,15 +120,15 @@ app.buttonHandlers = {
         app.displaySpeech(speech);
       }
     } else if (event.button === 'select') {
-        app.currentSpeech = speech;
-        if (app.currentMode === 'Speech') {
-          app.runSpeech(speech);
-        } else if (app.currentMode === 'Practice') {
-          app.runPractice(speech);
-        } else {
-          simply.title(app.currentMode + ' not implemented');
-          simply.subtitle('Sorry! :(');
-        }
+      app.currentSpeech = speech;
+      if (app.currentMode === 'Speech') {
+        app.runSpeech(speech);
+      } else if (app.currentMode === 'Practice') {
+        app.runPractice(speech);
+      } else {
+        simply.title(app.currentMode + ' not implemented');
+        simply.subtitle('Sorry! :(');
+      }
     }
   },
   runPractice: function(event) {
