@@ -29,3 +29,10 @@ article {
     position: relative;
 }
 
+.navbar-brand {
+    font-size: 36px;
+}
+
+#footer-text {
+    margin-right: 5px;
+}
