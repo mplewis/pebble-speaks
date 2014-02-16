@@ -227,7 +227,7 @@ app.runPractice = function(speech) {
   app.currentScreen = 'runPractice';
   app.start_time = Date.now();
   var currTopic = speech.sections[app.topic_num].topic;
-  simply.title('RECORDING');
+  simply.title('RECORDING Press to mark:');
   simply.subtitle(currTopic);
   app.topic_num += 1;
 };
