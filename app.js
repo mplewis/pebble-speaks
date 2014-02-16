@@ -182,7 +182,7 @@ app.buttonHandlers = {
     if (app.topic_num < speech.sections.length) {
       app.currentTopic = speech.sections[app.topic_num].topic;
       app.prevTopic = speech.sections[app.topic_num-1].topic;
-      simply.subtitle(app.currentTopic);
+      simply.title(app.currentTopic);
       app.markTime();
       app.topic_num += 1;
     } else {
@@ -208,7 +208,7 @@ app.accelHandlers = {
     if (app.topic_num < speech.sections.length) {
       app.currentTopic = speech.sections[app.topic_num].topic;
       app.prevTopic = speech.sections[app.topic_num-1].topic;
-      simply.subtitle(app.currentTopic);
+      simply.title(app.currentTopic);
       app.markTime();
       app.topic_num += 1;
     } else {
@@ -251,8 +251,8 @@ app.runPractice = function(speech) {
   app.currentScreen = 'runPractice';
   app.start_time = Date.now();
   var currTopic = speech.sections[app.topic_num].topic;
-  simply.title('RECORDING Press to mark:');
-  simply.subtitle(currTopic);
+  simply.title(currTopic);
+  simply.subtitle('RECORDING Press to mark:');
   app.topic_num += 1;
 };
 
