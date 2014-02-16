@@ -236,6 +236,10 @@ app.runSpeech = function(speech) {
   simply.subtitle('Starts in ' + countdown + '...');
 };
 
+app.runFreeform = function() {
+  //working on freeform
+}
+
 simply.title('Loading...');
 
 ajax({ url: SPEECHES_URL, type: 'json' }, function(retrieved) {
