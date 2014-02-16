@@ -32,7 +32,7 @@ app.secsToMMSS = function(secs) {
 };
 
 app.displaySpeech = function(speechData) {
-  simply.setText({title: speechData.title}, true);
+  simply.title(speechData.title);
   simply.subtitle(speechData.sections.length + ' sections');
 };
 
@@ -121,10 +121,10 @@ app.buttonHandlers = {
     } else if (event.button === 'select') {
       if (app.currentMode === 'Speech') {
         app.runSpeech(speech);
-      } else if (app.currentMode === 'Freeform') {
+      } else if (app.currentMode === 'Practice') {
         app.runPractice(speech);
       } else {
-        simply.title('Not implemented');
+        simply.title(app.currentMode + ' not implemented');
         simply.subtitle('Sorry! :(');
       }
     }
@@ -157,6 +157,10 @@ app.buttonHandlers = {
   }
 };
 
+app.accelHandlers = {
+  // your handlers go here
+}
+
 simply.on('singleClick', function(event) {
   if (app.currentScreen in app.buttonHandlers) {
     app.buttonHandlers[app.currentScreen](event);
@@ -164,8 +168,8 @@ simply.on('singleClick', function(event) {
 });
 
 simply.on('accelTap', function(event) {
-  if (app.currentScreen in app.buttonHandlers) {
-    app.buttonHandlers[app.currentScreen](event);
+  if (app.currentScreen in app.accelHandlers) {
+    app.accelHandlers[app.currentScreen](event);
   }
 });
 
