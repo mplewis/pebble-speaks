@@ -183,8 +183,8 @@ app.speechSelect = function() {
 app.runPractice = function(speech) {
   app.currentScreen = 'runPractice';
   app.start_time = Date.now();
-  var currTopic = speech.sections[app.topic_num].topic;
-  simply.subtitle();
+  //var currTopic = speech.sections[app.topic_num].topic;
+  simply.subtitle(app.currentTopic);
   app.topic_num += 1;
 };
 
