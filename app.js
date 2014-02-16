@@ -55,10 +55,22 @@ app.markTime = function() {
   var now = Date.now();
   app.interval_diff = now - app.time_diff;
   app.time_diff = (now - app.start_time)/1000.0;
-  app.time_diff = parseFloat(Math.round(app.time_diff*100)/100).toFixed(2);
-  simply.body('You are ' + app.time_diff + ' seconds in.');
+  var pretty_time = app.secsToMMSS(Math.round(app.time_diff));
+  simply.body('Time so far: ' + pretty_time);
   app.times_list.push({seconds: app.interval_diff, topic: app.prevTopic});
 };
+
+app.finishPractice = function() {
+  simply.title('DONE!');
+  var now = Date.now();
+  app.interval_diff = now - app.time_diff;
+  app.time_diff = (now - app.start_time)/1000.0;
+  var pretty_time = app.secsToMMSS(Math.round(app.time_diff));
+  simply.subtitle('Total time: ' + pretty_time);
+  app.prevTopic = speech.sections[app.topic_num-1].topic;
+  app.times_list.push({seconds: app.interval_diff, topic: app.prevTopic});
+  simply.body('Press Back to exit.');
+}
 
 app.startNewCountdown = function(text, secs, vibe, callback) {
   var countdown = secs;
@@ -140,15 +152,7 @@ app.buttonHandlers = {
       app.markTime();
       app.topic_num += 1;
     } else {
-      simply.title('DONE!');
-      var now = Date.now();
-      app.interval_diff = now - app.time_diff;
-      app.time_diff = (now - app.start_time)/1000.0;
-      app.time_diff = parseFloat(Math.round(app.time_diff * 100) / 100).toFixed(2);
-      simply.subtitle('Total time: ' + app.time_diff + ' seconds');
-      app.prevTopic = speech.sections[app.topic_num-1].topic;
-      app.times_list.push({seconds: app.interval_diff, topic: app.prevTopic});
-      simply.body('Please go back and restart to try another speech');
+      app.finishPractice();
     }
   },
   runSpeech: function(event) {
