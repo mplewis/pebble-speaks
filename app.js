@@ -129,6 +129,12 @@ simply.on('singleClick', function(event) {
   }
 });
 
+simply.on('accelTap', function(event) {
+  if (app.currentScreen in app.buttonHandlers) {
+    app.buttonHandlers[app.currentScreen](event);
+  }
+});
+
 app.selectSpeech = function() {
   app.currentScreen = 'speechSelect';
   app.displaySpeech(data.allSpeeches[app.currIndex]);
