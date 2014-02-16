@@ -18,9 +18,12 @@ footer {
 }
 
 #footer-text {
+    font-size: 20px;
     left: 10px;
     bottom: 10px;
     text-align: right;
+    padding: 5px;
+    padding-right: 15px;
 }
 
 article {
@@ -31,8 +34,4 @@ article {
 
 .navbar-brand {
     font-size: 36px;
-}
-
-#footer-text {
-    margin-right: 5px;
 }
