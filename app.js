@@ -152,13 +152,18 @@ app.buttonHandlers = {
         app.currIndex = 0;
       }
       app.displaySpeech(data.allSpeeches[app.currIndex]);
+      simply.body('Speech ' + (app.currIndex + 1) +
+                  ' of ' + data.allSpeeches.length);
     } else if (event.button === 'down') {
       app.currIndex++;
       if (app.currIndex >= data.allSpeeches.length) {
         app.currIndex = data.allSpeeches.length - 1;
       }
       app.displaySpeech(data.allSpeeches[app.currIndex]);
+      simply.body('Speech ' + (app.currIndex + 1) +
+                  ' of ' + data.allSpeeches.length);
     } else if (event.button === 'select') {
+      simply.body('');
       var speech = data.allSpeeches[app.currIndex];
       app.currentSpeech = speech;
       if (app.currentMode === 'Speech') {
@@ -211,6 +216,8 @@ app.speechSelect = function() {
   app.currentScreen = 'speechSelect';
   app.currIndex = 0;
   app.displaySpeech(data.allSpeeches[app.currIndex]);
+  simply.body('Speech ' + (app.currIndex + 1) +
+              ' of ' + data.allSpeeches.length);
 };
 
 app.runPractice = function(speech) {
