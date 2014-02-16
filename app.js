@@ -69,7 +69,31 @@ app.finishPractice = function() {
   simply.subtitle('Total time: ' + pretty_time);
   app.prevTopic = speech.sections[app.topic_num-1].topic;
   app.times_list.push({seconds: app.interval_diff, topic: app.prevTopic});
-  simply.body('Press Back to exit.');
+  // Clean up app time diffs
+  var last_millis = app.start_time;
+  app.times_list = app.times_list.map(function(item) {
+    // Convert to seconds and round
+    var old_millis = item.seconds;
+    item.seconds = Math.round((item.seconds - last_millis) / 1000);
+    last_millis = old_millis;
+    return item;
+  });
+  // Add title
+  var finalSpeech = {
+    title: app.currentSpeech.title,
+    sections: app.times_list
+  };
+  simply.body('Saving timings...');
+  ajax({
+    method: 'put',
+    url: 'http://pspk-kesdev-com-hgijn12sdjfo.runscope.net/speeches/' + app.currIndex,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    data: {'speechData': JSON.stringify(finalSpeech)}
+  }, function() {
+    simply.title('Data saved! Press Back to exit.');
+  }, function() {
+    simply.title('Couldn\'t save data. Check your network connection.');
+  });
 }
 
 app.startNewCountdown = function(text, secs, vibe, callback) {
