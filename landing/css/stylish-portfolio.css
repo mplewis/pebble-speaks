@@ -250,3 +250,22 @@ i.scroll:hover {
 .text {
     width: 80%;
 }
+
+h2 {
+    text-align: center;
+}
+
+#wrapper {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#left {
+    float: left;
+    width:75%;
+    overflow: hidden;
+}
+
+#right {
+    overflow: hidden;
+}
