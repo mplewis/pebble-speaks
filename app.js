@@ -175,7 +175,9 @@ simply.on('accelTap', function(event) {
 
 app.speechSelect = function() {
   app.currentScreen = 'speechSelect';
-  app.displaySpeech(data.allSpeeches[app.currIndex]);
+  app.currIndex = 0;
+  var currSpeech = data.allSpeeches[app.currIndex]
+  app.displaySpeech(currSpeech);
 };
 
 app.runPractice = function(speech) {
