@@ -17,6 +17,7 @@ data.allSpeeches = [];
 
 app.currIndex = 0;
 app.currentScreen = 'loading';
+app.currSpeech = '';
 
 app.secsToMMSS = function(secs) {
   var minutes = 0;
@@ -119,14 +120,15 @@ app.buttonHandlers = {
         app.displaySpeech(speech);
       }
     } else if (event.button === 'select') {
-      if (app.currentMode === 'Speech') {
-        app.runSpeech(speech);
-      } else if (app.currentMode === 'Practice') {
-        app.runPractice(speech);
-      } else {
-        simply.title(app.currentMode + ' not implemented');
-        simply.subtitle('Sorry! :(');
-      }
+        app.currentSpeech = speech;
+        if (app.currentMode === 'Speech') {
+          app.runSpeech(speech);
+        } else if (app.currentMode === 'Practice') {
+          app.runPractice(speech);
+        } else {
+          simply.title(app.currentMode + ' not implemented');
+          simply.subtitle('Sorry! :(');
+        }
     }
   },
   runPractice: function(event) {
@@ -176,15 +178,14 @@ simply.on('accelTap', function(event) {
 app.speechSelect = function() {
   app.currentScreen = 'speechSelect';
   app.currIndex = 0;
-  var currSpeech = data.allSpeeches[app.currIndex]
-  app.displaySpeech(currSpeech);
+  app.displaySpeech(data.allSpeeches[app.currIndex]);
 };
 
 app.runPractice = function(speech) {
   app.currentScreen = 'runPractice';
   app.start_time = Date.now();
   var currTopic = speech.sections[app.topic_num].topic;
-  simply.subtitle();
+  simply.subtitle(currTopic);
   app.topic_num += 1;
 };
 
