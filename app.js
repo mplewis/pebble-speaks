@@ -17,6 +17,7 @@ data.allSpeeches = [];
 
 app.currIndex = 0;
 app.currentScreen = 'loading';
+app.currSpeech = '';
 
 app.secsToMMSS = function(secs) {
   var minutes = 0;
@@ -119,6 +120,7 @@ app.buttonHandlers = {
         app.displaySpeech(speech);
       }
     } else if (event.button === 'select') {
+      app.currentSpeech = speech;
       if (app.currentMode === 'Speech') {
         app.runSpeech(speech);
       } else if (app.currentMode === 'Practice') {
@@ -176,8 +178,7 @@ simply.on('accelTap', function(event) {
 app.speechSelect = function() {
   app.currentScreen = 'speechSelect';
   app.currIndex = 0;
-  var currSpeech = data.allSpeeches[app.currIndex]
-  app.displaySpeech(currSpeech);
+  app.displaySpeech(data.allSpeeches[app.currIndex]);
 };
 
 app.runPractice = function(speech) {
