@@ -194,6 +194,8 @@ app.buttonHandlers = {
     speech = app.currentSpeech;
     if (app.topic_num < speech.sections.length) {
       app.currentTopic = speech.sections[app.topic_num].topic;
+      simply.subtitle(app.currentTopic);
+      app.topic_num += 1
     } else {
       app.speechDone();
     }
@@ -214,8 +216,11 @@ app.accelHandlers = {
     }
   },
   runFreeform: function(event) {
+    speech = app.currentSpeech;
     if (app.topic_num < speech.sections.length) {
       app.currentTopic = speech.sections[app.topic_num].topic;
+      simply.subtitle(app.currentTopic);
+      app.topic_num += 1
     } else {
       app.speechDone();
     }
