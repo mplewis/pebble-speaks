@@ -2,13 +2,14 @@ $(function() {
     $("#submit").on("click", function() {
         var speechName = $("#speechName").val();
         var topicPhrases = document.getElementById("topicPhrases").value;
+        var defaultSeconds = 10;
 
         topicPhrases = topicPhrases.split("\n");
         var sections = [];
         // Trim trailing whitespace and format correctly for storage
         for (var i in topicPhrases) {
             var topic = {
-                "seconds": 0,
+                "seconds": defaultSeconds,
                 "topic": topicPhrases[i].trim()
             };
             sections.push(topic);
