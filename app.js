@@ -91,8 +91,10 @@ app.finishPractice = function() {
     data: {'speechData': JSON.stringify(finalSpeech)}
   }, function() {
     simply.title('Data saved! Press Back to exit.');
+    simply.vibe('long');
   }, function() {
     simply.title('Couldn\'t save data. Check your network connection.');
+    simply.vibe('double');
   });
 }
 
